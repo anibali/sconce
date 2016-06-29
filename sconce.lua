@@ -5,6 +5,7 @@ require('sconce.ClassificationMetrics')
 require('sconce.DebugProbe')
 require('sconce.ExtractFeaturesNN')
 require('sconce.Swapout')
+require('sconce.Sideload')
 require('sconce.ProgressBar')
 sconce.util = require('sconce.util')
 
