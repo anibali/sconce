@@ -154,6 +154,7 @@ function Trainer:train(data_loader, opts)
     local epoch_loss = 0
     local n_iterations = 0
 
+    data_loader:reset()
     local batch_iterator = nil
     if sample_batches then
       batch_iterator = data_loader:sampleiter(batch_size, n_examples_per_epoch)
