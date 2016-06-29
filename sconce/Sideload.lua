@@ -10,7 +10,8 @@ end
 
 function Sideload:updateOutput(input)
   local tensor = self.get_tensor()
-  return {input, tensor}
+  self.output = {input, tensor}
+  return self.output
 end
 
 function Sideload:updateGradInput(input, gradOutput)
