@@ -27,6 +27,17 @@ return function(tester)
     tester:eq(actual, expected)
   end
 
+  function suite.test_split_sequential()
+    local seq = nn.Sequential()
+      :add(nn.Identity())
+      :add(nn.Identity())
+      :add(nn.Identity())
+      :add(nn.Identity())
+    local seq1, seq2 = unpack(util.split_sequential(seq, {3, 1}))
+    tester:eq(seq1:size(), 3)
+    tester:eq(seq2:size(), 1)
+  end
+
   tester:add(suite)
 
   return suite

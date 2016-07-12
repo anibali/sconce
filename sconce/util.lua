@@ -125,6 +125,21 @@ end
 --   layer.accGradParameters = layer.old_accGradParameters
 -- end
 
+function M.split_sequential(seq, sizes)
+  local new_seqs = {}
+  local offset = 0
+  for i,size in ipairs(sizes) do
+    local new_seq = nn.Sequential()
+    for j = (offset + 1), (offset + size) do
+      new_seq:add(seq:get(j))
+    end
+    offset = offset + size
+
+    table.insert(new_seqs, new_seq)
+  end
+  return new_seqs
+end
+
 local function annotate(opts)
   local annotations = {
     name = opts.name,
