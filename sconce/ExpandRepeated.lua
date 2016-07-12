@@ -1,3 +1,8 @@
+---
+-- Expands the input tensor by repeating along the specified dimension.
+--
+-- @classmod sconce.ExpandRepeated
+
 require('nn')
 
 local ExpandRepeated, Parent = require('sconce.ns').class('sconce.ExpandRepeated', 'nn.Module')

@@ -1,17 +1,16 @@
---[[
-
-Wraps another module, adding the ability to freeze and unfreeze parameter
-updates on that module.
-
-Use Freeze:freeze() to disable parameter updates on the wrapped module, and
-Freeze:unfreeze() to enable them. By default the module will be frozen.
-
-* module: The module to wrap
-
---]]
+---
+-- Wraps another module, adding the ability to freeze and unfreeze parameter
+-- updates on that module.
+--
+-- Use Freeze:freeze() to disable parameter updates on the wrapped module, and
+-- Freeze:unfreeze() to enable them. By default the module will be frozen.
+--
+-- @classmod sconce.Freeze
 
 local Freeze, Parent = require('sconce.ns').class('sconce.Freeze', 'nn.Module')
 
+---
+-- @tparam nn.Module module The module to wrap
 function Freeze:__init(module)
   Parent.__init(self)
 
@@ -20,10 +19,14 @@ function Freeze:__init(module)
   self.frozen = true
 end
 
+---
+-- Freeze parameter updates.
 function Freeze:freeze()
   self.frozen = true
 end
 
+---
+-- Unfreeze parameter updates.
 function Freeze:unfreeze()
   self.frozen = false
 end

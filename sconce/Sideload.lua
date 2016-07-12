@@ -1,7 +1,14 @@
+---
+-- Creates a two-element table containing the input and a sideloaded tensor.
+--
+-- @classmod sconce.Sideload
+
 require('nn')
 
 local Sideload, Parent = require('sconce.ns').class('sconce.Sideload', 'nn.Module')
 
+---
+-- @tparam func get_tensor Function which returns the sideloaded tensor
 function Sideload:__init(get_tensor)
   Parent.__init(self)
   assert(type(get_tensor) == 'function')

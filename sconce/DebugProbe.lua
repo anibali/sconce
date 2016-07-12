@@ -1,3 +1,10 @@
+---
+-- Inserts a debug probe in the model.
+--
+-- Do not try to serialize a model with debug probes in it.
+--
+-- @classmod sconce.DebugProbe
+
 local DebugProbe, parent = require('sconce.ns').class('sconce.DebugProbe', 'nn.Module')
 
 function DebugProbe:__init(show_value, show_gradient)

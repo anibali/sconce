@@ -1,3 +1,6 @@
+----
+-- @module sconce
+
 local sconce = require('sconce.ns')
 
 require('sconce.Trainer')

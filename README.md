@@ -9,5 +9,7 @@ local sconce = require('sconce')
 Run tests:
 
 ```sh
-th run_tests.lua
+$ th run_tests.lua
 ```
+
+Enjoy!
