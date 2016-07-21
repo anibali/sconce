@@ -32,17 +32,17 @@
 
 
 
-<h2>Modules</h2>
-<ul class="$(kind=='Topics' and '' or 'nowrap'">
-  <li><strong>sconce</strong></li>
-</ul>
 <h2>Classes</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
   <li><a href="../classes/sconce.DebugProbe.html">sconce.DebugProbe</a></li>
   <li><a href="../classes/sconce.ExpandRepeated.html">sconce.ExpandRepeated</a></li>
   <li><a href="../classes/sconce.Freeze.html">sconce.Freeze</a></li>
   <li><a href="../classes/sconce.Sideload.html">sconce.Sideload</a></li>
-  <li><a href="../classes/sconce.WeightedBCECriterion.html">sconce.WeightedBCECriterion</a></li>
+  <li><strong>sconce.WeightedBCECriterion</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/sconce.html">sconce</a></li>
 </ul>
 <h2>Topics</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
@@ -54,13 +54,12 @@
 
 <div id="content">
 
-<h1>Module <code>sconce</code></h1>
-<p>
-
-</p>
-<p>
-
-</p>
+<h1>Class <code>sconce.WeightedBCECriterion</code></h1>
+<p>A binary cross-entropy criterion which allows you to weight the loss
+ differently based on the target.</p>
+<p> When <code>weight</code> is closer to 1, instances
+ where target = 1 will be weighted to have a higher loss than instances where
+ target = 0.</p>
 
 
 
