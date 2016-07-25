@@ -32,31 +32,32 @@ function WeightedBCECriterion:__len()
 end
 
 function WeightedBCECriterion:updateOutput(input, target)
-  -- -log(input) * target * weight - log(1 - input) * (1 - target)
+  -- -log(input) * target * weight * scale - log(1 - input) * (1 - target) * (1 - weight) * scale
   assert(input:nElement() == target:nElement(), 'input and target size mismatch')
 
   self.buffer = self.buffer or input.new()
 
   local buffer = self.buffer
   local weight = self.weight
+  local scale = weight and 1 / (-2 * weight * weight + 2 * weight) or 1
   local output
 
   buffer:resizeAs(input)
 
-  -- log(input) * target * weight * 2
+  -- log(input) * target * weight
   buffer:add(input, eps):log()
 
   if weight then
-    buffer:mul(weight * 2)
+    buffer:mul(weight)
   end
 
   output = torch.dot(target, buffer)
 
-  -- log(1 - input) * (1 - target) * (1 - weight) * 2
+  -- log(1 - input) * (1 - target) * (1 - weight)
   buffer:mul(input, -1):add(1):add(eps):log()
 
   if weight then
-    buffer:mul((1 - weight) * 2)
+    buffer:mul((1 - weight))
   end
 
   output = output + torch.sum(buffer)
@@ -66,13 +67,13 @@ function WeightedBCECriterion:updateOutput(input, target)
     output = output / input:nElement()
   end
 
-  self.output = -output
+  self.output = -output * scale
 
   return self.output
 end
 
 function WeightedBCECriterion:updateGradInput(input, target)
-  -- -(target * input * (1 - weight) - input + target * weight) / (input * (1 - input))
+  -- -((target * input * (1 - weight) - input + target * weight) * scale) / (input * (1 - input))
   -- The gradient is slightly incorrect:
   -- It should have be divided by (input + eps) (1 - input + eps)
   -- but it is divided by input (1 - input + eps) + eps
@@ -84,6 +85,7 @@ function WeightedBCECriterion:updateGradInput(input, target)
   local buffer = self.buffer
   local gradInput = self.gradInput
   local weight = self.weight
+  local scale = weight and 1 / (-2 * weight * weight + 2 * weight) or 1
 
   buffer:resizeAs(input)
   -- -input * (1 + eps -input) + eps
@@ -91,13 +93,13 @@ function WeightedBCECriterion:updateGradInput(input, target)
 
   gradInput:resizeAs(input)
   if weight then
-    -- (input * (target * (1 - 2 * weight) + weight - 1) + target * weight) * 2
+    -- (input * (target * (1 - 2 * weight) + weight - 1) + target * weight) * scale
     gradInput
       :mul(target, 1 - 2 * weight)
       :add(weight - 1)
       :cmul(input)
       :add(weight, target)
-      :mul(2)
+      :mul(scale)
   else
     -- target - input
     gradInput:add(target, -1, input)
