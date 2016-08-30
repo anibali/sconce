@@ -3,6 +3,7 @@
 
 local sconce = require('sconce.ns')
 
+require('sconce.AddGaussianNoise')
 require('sconce.ClassificationMetrics')
 require('sconce.DebugProbe')
 require('sconce.ExpandRepeated')

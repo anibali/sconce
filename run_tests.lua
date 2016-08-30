@@ -7,9 +7,8 @@ local function register_test_suite(name)
   require('test.' .. name)(tester)
 end
 
-for i,v in ipairs(pl.dir.getfiles('test', 'test_*.lua')) do
+for i,v in ipairs(pl.dir.getfiles('test', '*/test_*.lua')) do
   register_test_suite(v:match('test/(.*).lua'))
 end
 
 tester:run()
-
